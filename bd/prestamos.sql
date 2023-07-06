@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-04-2019 a las 18:10:10
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.2.11
+-- Tiempo de generación: 06-07-2023 a las 02:20:27
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 7.4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -34,7 +33,7 @@ CREATE TABLE `clientes` (
   `cedula` varchar(50) NOT NULL,
   `direccion` varchar(100) DEFAULT NULL,
   `telefono` varchar(15) DEFAULT NULL,
-  `estado` tinyint(4) DEFAULT '1'
+  `estado` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -42,8 +41,8 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`idcliente`, `nombre`, `cedula`, `direccion`, `telefono`, `estado`) VALUES
-(1, 'Mario Casas', '103259878', 'Los Lagos', '214545', 1),
-(2, 'Juan Camilo', '281-051089-0012s', 'Torres', '333333', 1);
+(1, 'Bimbo', '103259878', 'autopista norte', '214545', 1),
+(2, 'Croydon', '281-051089-0012s', 'calle 80', '333333', 1);
 
 -- --------------------------------------------------------
 
@@ -78,7 +77,7 @@ CREATE TABLE `pagos` (
 --
 
 INSERT INTO `pagos` (`idpago`, `idprestamo`, `usuario`, `fecha`, `cuota`) VALUES
-(2, 2, 'juan', '2019-04-30 00:00:00', '1000.00');
+(3, 3, 'davivienda', '2023-07-05 00:00:00', '10000.00');
 
 -- --------------------------------------------------------
 
@@ -122,7 +121,7 @@ CREATE TABLE `prestamos` (
   `fpago` datetime DEFAULT NULL,
   `plazo` varchar(20) DEFAULT NULL,
   `fplazo` datetime DEFAULT NULL,
-  `estado` tinyint(4) DEFAULT '1'
+  `estado` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -130,7 +129,8 @@ CREATE TABLE `prestamos` (
 --
 
 INSERT INTO `prestamos` (`idprestamo`, `idcliente`, `usuario`, `fprestamo`, `monto`, `interes`, `saldo`, `formapago`, `fpago`, `plazo`, `fplazo`, `estado`) VALUES
-(2, 1, 3, '2019-04-30 00:00:00', '10000.00', '20.00', '12000.00', 'Diario', '2019-04-01 00:00:00', 'Mes', '2019-05-01 00:00:00', 1);
+(2, 1, 4, '2019-04-30 00:00:00', '10000.00', '10.00', '8000.00', 'Diario', '2019-04-01 00:00:00', 'Mes', '2019-05-01 00:00:00', 1),
+(3, 1, 4, '2023-07-05 00:00:00', '30000.00', '10.00', '33000.00', 'Mensual', '2023-07-04 00:00:00', 'Mes', '2023-07-18 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -149,20 +149,20 @@ CREATE TABLE `usuariopermiso` (
 --
 
 INSERT INTO `usuariopermiso` (`idusuariopermiso`, `idusuario`, `idpermiso`) VALUES
-(24, 3, 1),
-(25, 3, 2),
-(26, 3, 3),
-(27, 3, 4),
-(28, 3, 5),
-(29, 3, 6),
-(30, 3, 7),
-(31, 4, 1),
-(32, 4, 2),
-(33, 4, 3),
-(34, 4, 4),
-(35, 4, 5),
-(36, 4, 6),
-(37, 4, 7);
+(38, 4, 1),
+(39, 4, 2),
+(40, 4, 3),
+(41, 4, 4),
+(42, 4, 5),
+(43, 4, 6),
+(44, 4, 7),
+(45, 3, 1),
+(46, 3, 2),
+(47, 3, 3),
+(48, 3, 4),
+(49, 3, 5),
+(50, 3, 6),
+(51, 3, 7);
 
 -- --------------------------------------------------------
 
@@ -178,7 +178,7 @@ CREATE TABLE `usuarios` (
   `login` varchar(20) NOT NULL,
   `clave` varchar(64) NOT NULL,
   `imagen` varchar(50) DEFAULT NULL,
-  `estado` tinyint(4) DEFAULT '1'
+  `estado` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -186,8 +186,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idusuario`, `nombre`, `direccion`, `telefono`, `login`, `clave`, `imagen`, `estado`) VALUES
-(3, 'Juan', 'Centro 2', '8333333', 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '', 1),
-(4, 'Juan', 'Centro', '222222', 'juan', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '', 1);
+(3, 'Av villas', 'av nqs calle 8', '8333333', 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '1688599436.png', 1),
+(4, 'Davivienda', 'Calle 6', '222222', 'admin2', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '1688599325.png', 1);
 
 --
 -- Índices para tablas volcadas
@@ -265,7 +265,7 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `idpago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idpago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -277,13 +277,13 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `prestamos`
 --
 ALTER TABLE `prestamos`
-  MODIFY `idprestamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idprestamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuariopermiso`
 --
 ALTER TABLE `usuariopermiso`
-  MODIFY `idusuariopermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `idusuariopermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
